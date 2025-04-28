@@ -1,0 +1,11 @@
+{
+  "name": "title-url-copier",
+  "version": "1.0.0",
+  "description": "WebページのタイトルとURLを同時にコピーできるChrome拡張機能",
+  "scripts": {
+    "build:icons": "node scripts/build-icons.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.32.1"
+  }
+} 
