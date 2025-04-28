@@ -3,17 +3,32 @@ console.log('コンテンツスクリプトが読み込まれました');
 
 // メッセージを受け取ったときの処理
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "ping") {
+    // pingメッセージに対して応答
+    sendResponse({ status: "ok" });
+    return true;
+  }
+  
   if (request.action === "copyToClipboard") {
     // クリップボードにコピー
     navigator.clipboard.writeText(request.text)
       .then(() => {
         // コピー成功時の通知
         showNotification("コピーしました！");
+        sendResponse({ status: "success" });
       })
       .catch((err) => {
         console.error("コピーに失敗しました:", err);
         showNotification("コピーに失敗しました", true);
+        sendResponse({ status: "error", error: err.message });
       });
+    return true;
+  }
+
+  if (request.action === "showNotification") {
+    showNotification(request.message);
+    sendResponse({ status: "ok" });
+    return true;
   }
 });
 
